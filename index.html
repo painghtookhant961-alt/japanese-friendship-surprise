@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You 🌸 - Japanese Journey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+Myanmar:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animation.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Persistent Ambient Background -->
+    <div id="global-bg">
+        <div class="night-sky"></div>
+        <div class="moon"></div>
+        <div class="mountains"></div>
+        <div class="sakura-tree"></div>
+    </div>
+    
+    <canvas id="ambient-canvas"></canvas>
+    
+    <!-- Audio -->
+    <audio id="bgm" loop preload="auto">
+        <source src="assets/audio/music.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="top-corner-ui" style="position: fixed; top: 20px; right: 20px; z-index: 100; display: flex; align-items: center; gap: 15px;">
+        <div id="music-indicator" style="display: flex; align-items: center; gap: 8px; background: rgba(255,192,203,0.1); padding: 5px 15px; border-radius: 20px; backdrop-filter: blur(10px); border: 1px solid rgba(255,192,203,0.3); color: #fff; font-size: 0.9rem; opacity: 0; transition: opacity 1s ease; pointer-events: none;">
+            <span class="music-icon" style="color: #ffb7c5; text-shadow: 0 0 8px #ffb7c5; animation: pulse 2s infinite ease-in-out;">🎵</span> <span class="lang-text" data-jp="音楽再生中" data-en="Music On">Music On</span>
+        </div>
+        <button id="lang-toggle-btn" class="glass-btn" onclick="app.toggleLanguage()" style="padding: 5px 15px; border-radius: 15px; font-size: 0.9rem; min-width: 140px; transition: all 0.3s ease;">日本語 | English</button>
+    </div>
+
+
+    <div id="app-container">
+        
+        <!-- PAGE 1: OPENING -->
+        <section id="page-1" class="page active">
+            <div id="heart-container"></div>
+            <div class="intro-text-box hidden" id="intro-texts">
+                <h1 class="glow-text lang-text" data-jp="日本語を勉強しているあなたへ 🌸" data-en="For you who are studying Japanese 🌸">日本語を勉強しているあなたへ 🌸</h1>
+                <button class="glass-btn primary-btn pulse" style="margin-top: 15px;" onclick="app.goToPage(2)">Begin Journey</button>
+            </div>
+        </section>
+
+        <!-- PAGE 2: STORY -->
+        <section id="page-2" class="page">
+            <div class="glass-card story-card">
+                <div class="character-illustration"></div>
+                <div class="story-content">
+                    <p id="story-text" class="typing-text jp-text" style="font-size: 1.2rem; line-height: 2;"></p>
+                </div>
+                <button class="glass-btn primary-btn hidden pop-out" id="story-next-btn" onclick="app.nextStory()">Continue</button>
+            </div>
+        </section>
+
+        <!-- PAGE 3: FRIENDSHIP MESSAGE -->
+        <section id="page-3" class="page">
+            <div class="glass-card message-card">
+                <h2>あなたへ 🌸</h2>
+                <div class="message-content">
+                    <p class="jp-text lang-text" data-jp="日本語の勉強、がんばってね 🇯🇵" data-en="Keep doing your best studying Japanese 🇯🇵" style="font-size: 1.2rem; margin-bottom: 10px;">日本語の勉強、がんばってね 🇯🇵</p>
+                    <p class="jp-text lang-text" data-jp="いつも応援しています 🌸" data-en="I am always cheering for you 🌸" style="font-size: 1.2rem;">いつも応援しています 🌸</p>
+                </div>
+                <button class="glass-btn primary-btn pulse" onclick="app.goToPage(4)">Start Game</button>
+            </div>
+        </section>
+
+        <!-- PAGE 4: GAMES MENU -->
+        <section id="page-4" class="page">
+            <div class="glass-card games-menu">
+                <h2 class="lang-text" data-jp="チャレンジを選んでね" data-en="Choose Your Challenge">Choose Your Challenge</h2>
+                <div class="game-options">
+                    <button class="glass-btn game-btn" onclick="app.startGame1()">🌸 Memory Match</button>
+                    <button class="glass-btn game-btn" onclick="app.startGame2()">🇯🇵 Japan Journey Quiz</button>
+                </div>
+                <button class="glass-btn primary-btn pop-out" id="finish-games-btn" style="margin-top: 30px; display: none;" onclick="app.goToPage(5)">See Results</button>
+            </div>
+        </section>
+
+        <!-- GAME 1: MEMORY MATCH -->
+        <section id="page-game-1" class="page game-page">
+            <div class="game-header glass-card" style="max-width: 500px;">
+                <div class="stats">
+                    <span>Score: <span id="g1-score">0</span></span>
+                    <span>Moves: <span id="g1-moves">0</span></span>
+                    <span>Time: <span id="g1-time">0</span>s</span>
+                </div>
+                <button class="glass-btn" onclick="games.initGame1()" style="padding: 5px 15px; margin-top: 10px; font-size: 0.9rem;">Restart</button>
+            </div>
+            <div id="g1-memory-board" class="memory-grid"></div>
+            <div id="g1-overlay" class="game-overlay hidden">
+                <h2 class="glow-text" style="font-size: 2.5rem;">Great Memory! 🌸</h2>
+                <p style="font-size: 1.2rem; margin-top: 10px;">You did an amazing job!</p>
+                <p style="margin-top: 10px; font-size: 1.2rem;">Final Score: <strong id="g1-final-score">0</strong></p>
+                <button class="glass-btn primary-btn" onclick="app.endGame1()">Continue</button>
+            </div>
+        </section>
+
+        <!-- GAME 2: JOURNEY QUIZ -->
+        <section id="page-game-2" class="page game-page">
+            <div class="glass-card map-card">
+                <div class="map-container">
+                    <div class="map-path">
+                        <div id="map-progress" style="width: 10%; height: 100%; background: var(--primary); box-shadow: 0 0 10px var(--primary); transition: width 1s cubic-bezier(0.25, 0.8, 0.25, 1);"></div>
+                    </div>
+                    <div class="map-point" id="pt-mm" style="left: 10%;">🇲🇲<br>Myanmar</div>
+                    <div class="map-point" id="pt-tokyo" style="left: 40%;">🚉<br>Tokyo</div>
+                    <div class="map-point" id="pt-kyoto" style="left: 70%;">🌸<br>Kyoto</div>
+                    <div class="map-point" id="pt-fuji" style="left: 100%;">🗻<br>Fuji</div>
+                    <div id="player-avatar" class="avatar">🚶‍♀️</div>
+                </div>
+            </div>
+            <div class="glass-card quiz-card" id="quiz-box">
+                <h3 id="g2-question">Question</h3>
+                <div id="g2-options" class="options-container"></div>
+            </div>
+            <div id="g2-overlay" class="game-overlay hidden">
+                <h2 class="glow-text">Journey Complete! 🎆</h2>
+                <button class="glass-btn primary-btn" onclick="app.endGame2()">Continue</button>
+            </div>
+        </section>
+
+        <!-- PAGE 5: RESULTS -->
+        <section id="page-5" class="page">
+            <div class="glass-card results-card">
+                <h2 class="lang-text" data-jp="よくできました 🌸" data-en="Well done! 🌸">よくできました 🌸</h2>
+                <div class="results-stats" style="margin: 20px 0; font-size: 1.2rem;">
+                    <p>Memory Match Score: <strong id="res-score">0</strong></p>
+                    <p>Japan Journey: <strong id="res-journey">Pending</strong></p>
+                </div>
+                <p style="margin-bottom: 20px;">Your Japanese journey continues...</p>
+                <button class="glass-btn primary-btn" onclick="app.goToPage(6)">Finish</button>
+            </div>
+        </section>
+
+        <!-- PAGE 6: FINAL MESSAGE -->
+        <section id="page-6" class="page sakura-garden-bg">
+
+            <div class="glass-card" id="final-message-card" style="opacity: 0; transform: translateY(20px); transition: all 1s ease; width: 95%; max-width: 600px; padding: 30px 20px;">
+                <div id="final-text-container" style="display: flex; flex-direction: column; gap: 30px;">
+                    <!-- JS will inject typing text here -->
+                </div>
+            </div>
+            <div id="final-fireworks"></div>
+        </section>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/games.js"></script>
+    <script src="js/scenes.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

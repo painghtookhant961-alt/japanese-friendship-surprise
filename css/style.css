@@ -1,0 +1,151 @@
+:root {
+    --primary: #ffb7c5;
+    --secondary: #ff8fa3;
+    --dark-blue: #0b1021;
+    --glass-bg: rgba(255, 255, 255, 0.12);
+    --glass-border: rgba(255, 255, 255, 0.25);
+    --text-light: #f8f9fa;
+    --font-en: 'Poppins', sans-serif;
+    --font-mm: 'Noto Sans Myanmar', sans-serif;
+    --font-jp: 'Noto Sans JP', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: var(--font-en);
+    background-color: var(--dark-blue);
+    color: var(--text-light);
+    overflow: hidden;
+    width: 100vw; height: 100vh;
+}
+
+#global-bg {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+    background: linear-gradient(to bottom, #050814 0%, #1a1b41 100%);
+}
+.moon {
+    position: absolute; top: 12%; right: 15%;
+    width: 120px; height: 120px;
+    background: #fffbdf; border-radius: 50%;
+    box-shadow: 0 0 60px 20px rgba(255, 251, 223, 0.25);
+}
+.mountains {
+    position: absolute; bottom: 0; width: 100%; height: 35vh;
+    background: linear-gradient(to bottom, #2a2d5c, #0b1021);
+    clip-path: polygon(0 100%, 15% 45%, 45% 85%, 75% 35%, 100% 100%);
+    opacity: 0.6;
+}
+.sakura-tree {
+    position: absolute; bottom: -50px; left: -50px;
+    width: 350px; height: 450px;
+    background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 100 Q45 50 20 40 Q45 45 50 20 Q55 45 80 40 Q55 50 50 100" fill="%231a1b41"/><circle cx="20" cy="40" r="18" fill="%23ffb7c5" opacity="0.6"/><circle cx="50" cy="20" r="22" fill="%23ffb7c5" opacity="0.6"/><circle cx="80" cy="40" r="18" fill="%23ffb7c5" opacity="0.6"/></svg>') no-repeat bottom left;
+    background-size: contain;
+    opacity: 0.85;
+}
+
+#ambient-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+
+.audio-btn {
+    position: fixed; top: 25px; right: 25px; z-index: 100;
+    width: 55px; height: 55px; border-radius: 50%;
+    font-size: 1.5rem; display: flex; align-items: center; justify-content: center;
+    padding: 0;
+}
+
+#app-container { position: relative; width: 100%; height: 100%; }
+
+.page {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; padding: 20px;
+    transform: translateY(40px) scale(0.95);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.page.active { 
+    opacity: 1; pointer-events: all; 
+    transform: translateY(0) scale(1);
+}
+
+.glass-card {
+    background: var(--glass-bg); backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border); border-radius: 20px;
+    padding: 3rem; text-align: center; max-width: 650px; width: 100%;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+
+.glass-btn {
+    background: rgba(255,255,255,0.15); border: 1px solid var(--glass-border);
+    color: white; padding: 14px 35px; border-radius: 30px; font-family: var(--font-en);
+    font-size: 1.1rem; cursor: pointer; backdrop-filter: blur(5px);
+    transition: all 0.3s ease; margin-top: 20px; letter-spacing: 1px;
+}
+.glass-btn:hover {
+    background: rgba(255,255,255,0.25); transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 183, 197, 0.4);
+}
+.primary-btn {
+    background: linear-gradient(135deg, rgba(255,183,197,0.7), rgba(255,143,163,0.7));
+    border-color: var(--primary); font-weight: 600;
+}
+
+.glow-text {
+    font-size: 3.5rem; text-shadow: 0 0 20px var(--primary), 0 0 40px var(--secondary);
+    margin-bottom: 15px; font-family: var(--font-en);
+}
+.typing-text { font-size: 1.4rem; line-height: 2; min-height: 100px; }
+.jp-text { font-family: var(--font-jp); font-size: 1.5rem; margin: 20px 0; color: var(--primary); font-weight: bold; }
+.mm-text { font-family: var(--font-mm); font-size: 1.25rem; line-height: 2; }
+
+#heart-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+.intro-text-box { z-index: 2; display: flex; flex-direction: column; align-items: center; margin-top: 25vh; }
+
+.story-card { background: rgba(11, 16, 33, 0.75); }
+.character-illustration {
+    width: 140px; height: 140px; margin: 0 auto 25px; border-radius: 50%;
+    background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50" fill="%23ffb7c5"/><text x="50" y="65" font-size="45" text-anchor="middle" fill="white">👧🏻</text></svg>');
+    box-shadow: 0 0 20px rgba(255, 183, 197, 0.4);
+}
+
+.game-options { display: flex; flex-direction: column; gap: 15px; margin-top: 25px; }
+
+/* Game Headers */
+.game-header { position: absolute; top: 30px; width: 90%; max-width: 700px; padding: 20px; display: flex; flex-direction: column; gap: 15px; z-index: 5; }
+.stats { display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; }
+.game-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(11, 16, 33, 0.85); backdrop-filter: blur(5px); z-index: 10;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+
+/* Memory Match Game */
+.memory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; width: 90%; max-width: 450px; margin-top: 130px; perspective: 1000px; z-index: 5; }
+.memory-card { position: relative; width: 100%; aspect-ratio: 1 / 1; cursor: pointer; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); }
+.memory-card.flipped { transform: rotateY(180deg); }
+.memory-card.matched { transform: rotateY(180deg) scale(0.95); opacity: 0.8; pointer-events: none; }
+.memory-card-front, .memory-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 3rem; box-shadow: 0 5px 15px rgba(0,0,0,0.3); user-select: none; }
+.memory-card-front { background: rgba(255, 183, 197, 0.85); border: 2px solid rgba(255, 255, 255, 0.5); transform: rotateY(180deg); }
+.memory-card-back { background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05)); border: 2px solid rgba(255, 183, 197, 0.4); backdrop-filter: blur(10px); }
+.memory-card-back::after { content: '🌸'; font-size: 1.5rem; opacity: 0.7; }
+
+/* Game 2 */
+.map-card { width: 90%; max-width: 800px; height: 160px; margin-bottom: 25px; position: relative; }
+.map-path { position: absolute; top: 50%; left: 10%; width: 80%; height: 6px; background: rgba(255,255,255,0.15); border-radius: 3px; transform: translateY(-50%); overflow: hidden; }
+.map-point { position: absolute; top: 50%; transform: translate(-50%, -50%); text-align: center; font-size: 1rem; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+.avatar { position: absolute; top: 20%; left: 10%; transform: translateX(-50%); font-size: 2.5rem; transition: left 1s cubic-bezier(0.25, 0.8, 0.25, 1); filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4)); }
+.quiz-card { width: 90%; max-width: 650px; }
+.options-container { display: flex; flex-direction: column; gap: 15px; margin-top: 25px; }
+
+/* Envelope */
+.envelope-wrapper { cursor: pointer; perspective: 1200px; }
+.env-front p { animation: pulse 2s infinite; }
+
+/* Final Scene Sakura Garden */
+.sakura-garden-bg { background: radial-gradient(circle at center, rgba(255, 183, 197, 0.25) 0%, transparent 80%); }
+.envelope { position: relative; width: 340px; height: 220px; background: #e8a5b2; border-radius: 8px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
+.flap { position: absolute; top: 0; left: 0; width: 100%; height: 55%; background: #ffb7c5; clip-path: polygon(0 0, 50% 100%, 100% 0); transform-origin: top; transition: transform 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 3; }
+.letter { position: absolute; top: 12px; left: 12px; right: 12px; bottom: 12px; background: #fffdf8; padding: 25px; color: #2c3e50; transform: translateY(0); transition: transform 1s 0.5s ease-out; z-index: 1; text-align: center; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 0 15px rgba(0,0,0,0.15); border-radius: 6px;}
+.envelope::before { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: #f4c2cc; clip-path: polygon(0 100%, 50% 45%, 100% 100%, 100% 100%, 0 100%); z-index: 2; }
+.envelope::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #f0b4c0; clip-path: polygon(0 0, 50% 50%, 0 100%); z-index: 2; }
+.envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 0; }
+.envelope-wrapper.open .letter { transform: translateY(-100px); z-index: 4; }

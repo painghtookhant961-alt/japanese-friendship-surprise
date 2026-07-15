@@ -1,0 +1,32 @@
+@media (max-width: 768px) {
+    .glow-text { font-size: 2.4rem; }
+    .glass-card { padding: 1.8rem; border-radius: 15px; }
+    
+    .story-content { font-size: 1.1rem; }
+    .typing-text { font-size: 1.1rem; min-height: 120px; }
+    .jp-text { font-size: 1.3rem; }
+    .mm-text { font-size: 1.1rem; }
+    
+    .game-header { position: relative; top: 0; width: 100%; padding: 15px; margin-bottom: 20px; border-radius: 0 0 15px 15px; border-top: none; }
+    .memory-grid { margin-top: 20px; gap: 10px; max-width: 350px; }
+    .memory-card-front { font-size: 2.2rem; }
+    .stats { font-size: 1rem; }
+    
+    .map-card { height: 110px; padding: 1rem; }
+    .map-point { font-size: 0.8rem; }
+    .avatar { font-size: 1.8rem; top: 15%; }
+    
+    .falling-word { padding: 12px 20px; font-size: 1.1rem; }
+    
+    .envelope { width: 280px; height: 190px; }
+    .letter p { font-size: 1rem; }
+    
+    .audio-btn { width: 45px; height: 45px; font-size: 1.2rem; top: 15px; right: 15px; }
+}
+
+@media (max-width: 480px) {
+    .glow-text { font-size: 2rem; }
+    .glass-card { padding: 1.2rem; }
+    .stats { flex-wrap: wrap; gap: 5px; justify-content: center; }
+    .stats span { width: 45%; text-align: center; }
+}
